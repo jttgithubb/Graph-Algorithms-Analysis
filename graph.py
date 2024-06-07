@@ -45,19 +45,20 @@ class Graph:
 		
 	def get_farthest_node_d(self, node):
 		visited = set()
+		visited.add(node)
 		queue = deque([(node, 0)])
 		farthest_node = node
 		max_dist = 0
+
 		while queue:
 			curr_node, dist = queue.popleft()
-			visited.add(curr_node)
+			if dist > max_dist:
+				max_dist = dist
+				farthest_node = curr_node
 			for neighbor in self.adj_list[curr_node]:
 				if neighbor not in visited:
 					visited.add(neighbor)
 					queue.append((neighbor, dist + 1))
-					if dist + 1 > max_dist:
-						max_dist = dist + 1
-						farthest_node = neighbor
 		return farthest_node, max_dist
 	
 	def get_degeneracy_order(self):
